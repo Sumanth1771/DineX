@@ -10,6 +10,7 @@ import {
   cancelBooking,
 } from "../../services/bookingApi";
 import { useAuth } from "../../context/AuthContext";
+import heroImage from "../../assets/hero.png";
 
 const money = (paise = 0) =>
   new Intl.NumberFormat("en-IN", {
@@ -304,7 +305,7 @@ export default function CustomerDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="dine-customer min-h-screen bg-slate-950 text-white">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div>
@@ -331,18 +332,26 @@ export default function CustomerDashboard() {
       </header>
 
       <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-12">
-        <div className="mb-8 overflow-hidden rounded-3xl border border-amber-300/20 bg-gradient-to-br from-amber-400/15 via-slate-900 to-slate-900 p-6 sm:p-10">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">
-            Welcome to Uncle Mess
-          </p>
-          <h1 className="max-w-2xl text-3xl font-black leading-tight sm:text-5xl">
-            Good food, your table, ready when you arrive.
-          </h1>
-          <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
-            Choose your meal, reserve a slot, and pay securely
-            through checkout.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
+        <div className="dine-hero mb-8 overflow-hidden rounded-3xl border border-amber-300/20 bg-gradient-to-br from-amber-400/15 via-slate-900 to-slate-900 p-6 sm:p-10">
+          <div className="dine-hero-copy">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-300">
+              Welcome to Uncle Mess
+            </p>
+            <h1 className="max-w-2xl text-3xl font-black leading-tight sm:text-5xl">
+              Good food, your table, ready when you arrive.
+            </h1>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">
+              Choose your meal, reserve a slot, and pay securely
+              through checkout.
+            </p>
+          </div>
+          <div className="dine-hero-art" aria-hidden="true">
+            <div className="dine-orbit dine-orbit-one" />
+            <div className="dine-orbit dine-orbit-two" />
+            <img src={heroImage} alt="" />
+            <span>BOOK<br />EAT<br />REPEAT</span>
+          </div>
+          <div className="dine-hero-actions mt-6 flex flex-wrap gap-3">
             <button
               onClick={() => setActiveTab("book")}
               className="rounded-xl bg-amber-400 px-5 py-3 font-bold text-slate-950 hover:bg-amber-300"
@@ -497,7 +506,7 @@ export default function CustomerDashboard() {
                       return (
                         <article
                           key={item._id}
-                          className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-amber-300/40"
+                                className="dine-card flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-amber-300/40"
                         >
                           <div>
                             <div className="flex items-start justify-between gap-3">
@@ -561,7 +570,7 @@ export default function CustomerDashboard() {
             </div>
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-2xl border border-amber-300/20 bg-slate-900 p-5 sm:p-6">
+              <div className="dine-summary rounded-2xl border border-amber-300/20 bg-slate-900 p-5 sm:p-6">
                 <p className="text-sm font-semibold text-amber-300">
                   03. Order summary
                 </p>
@@ -661,7 +670,7 @@ export default function CustomerDashboard() {
                   return (
                     <article
                       key={booking._id}
-                      className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6"
+                      className="dine-card rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-4">
                         <div>

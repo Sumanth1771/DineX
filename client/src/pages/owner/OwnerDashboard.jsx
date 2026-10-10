@@ -71,7 +71,7 @@ function StatusBadge({ value }) {
 
 function Metric({ label, value, hint }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#111b2e] p-5">
+    <div className="dine-metric rounded-2xl border border-white/10 bg-[#111b2e] p-5">
       <p className="text-sm text-slate-400">{label}</p>
       <p className="mt-3 break-words text-2xl font-bold text-white">{value}</p>
       {hint && <p className="mt-2 text-xs text-slate-500">{hint}</p>}
@@ -371,7 +371,7 @@ export default function OwnerDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#080f1e] text-white">
+    <div className="dine-owner min-h-screen bg-[#080f1e] text-white">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-[#080f1e]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
           <div>

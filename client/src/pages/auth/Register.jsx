@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import heroImage from "../../assets/hero.png";
 import { useAuth } from "../../context/AuthContext";
 
 function Register() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { register } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +24,7 @@ function Register() {
 
     try {
       await register(form.name, form.email, form.password);
-      navigate("/dashboard");
+      navigate(location.state?.returnTo || "/dashboard");
     } catch (requestError) {
       const validationErrors = requestError.response?.data?.errors;
       setError(validationErrors?.length ? validationErrors[0].message :
@@ -75,11 +77,16 @@ function Register() {
               <input id="email" name="email" type="email" required autoComplete="email"
                 value={form.email} onChange={handleChange} placeholder="you@example.com" />
             </label>
-            <label className="auth-field" htmlFor="password">
+            <label className="auth-field auth-password-field" htmlFor="password">
               Password
-              <input id="password" name="password" type="password" required minLength={8} maxLength={128}
+              <input id="password" name="password" type={showPassword ? "text" : "password"} required minLength={8} maxLength={128}
                 autoComplete="new-password" value={form.password} onChange={handleChange}
                 placeholder="At least 8 characters" />
+              <button type="button" className="password-toggle"
+                onClick={() => setShowPassword((current) => !current)}
+                aria-label={showPassword ? "Hide password" : "Show password"}>
+                {showPassword ? "Hide" : "Show"}
+              </button>
             </label>
             <button className="auth-submit" type="submit" disabled={loading}>
               {loading ? "Creating your account..." : "Create my account"}
@@ -88,7 +95,7 @@ function Register() {
 
           <p className="mt-7 text-center text-sm text-slate-400">
             Already have an account?{" "}
-            <Link to="/login" className="font-bold text-amber-300 transition hover:text-amber-200">
+            <Link to="/login" state={location.state} className="font-bold text-amber-300 transition hover:text-amber-200">
               Sign in
             </Link>
           </p>

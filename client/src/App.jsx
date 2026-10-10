@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import LandingPage from "./pages/LandingPage";
+import Reserve from "./pages/customer/Reserve";
 
 import Dashboard from "./pages/customer/Dashboard";
 import OwnerDashboard from "./pages/owner/OwnerDashboard";
@@ -18,15 +20,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Navigate
-              to="/dashboard"
-              replace
-            />
-          }
-        />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/reserve" element={<Reserve />} />
 
         <Route
           path="/login"

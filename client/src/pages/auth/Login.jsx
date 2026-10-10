@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import heroImage from "../../assets/hero.png";
 import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +24,7 @@ function Login() {
 
     try {
       const user = await login(form.email, form.password);
-      navigate(user.role === "owner" ? "/owner/dashboard" : "/dashboard");
+      navigate(user.role === "owner" ? "/owner/dashboard" : location.state?.returnTo || "/dashboard");
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Login failed. Please try again.");
     } finally {
@@ -68,10 +70,15 @@ function Login() {
               <input id="email" name="email" type="email" required autoComplete="email"
                 value={form.email} onChange={handleChange} placeholder="you@example.com" />
             </label>
-            <label className="auth-field" htmlFor="password">
+            <label className="auth-field auth-password-field" htmlFor="password">
               Password
-              <input id="password" name="password" type="password" required autoComplete="current-password"
+              <input id="password" name="password" type={showPassword ? "text" : "password"} required autoComplete="current-password"
                 value={form.password} onChange={handleChange} placeholder="Enter your password" />
+              <button type="button" className="password-toggle"
+                onClick={() => setShowPassword((current) => !current)}
+                aria-label={showPassword ? "Hide password" : "Show password"}>
+                {showPassword ? "Hide" : "Show"}
+              </button>
             </label>
             <button className="auth-submit" type="submit" disabled={loading}>
               {loading ? "Signing you in..." : "Continue to DineX"}
@@ -80,7 +87,7 @@ function Login() {
 
           <p className="mt-7 text-center text-sm text-slate-400">
             New to DineX?{" "}
-            <Link to="/register" className="font-bold text-amber-300 transition hover:text-amber-200">
+            <Link to="/register" state={location.state} className="font-bold text-amber-300 transition hover:text-amber-200">
               Create an account
             </Link>
           </p>
